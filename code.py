@@ -1,5 +1,5 @@
-"""
-A fairly straightforward macro/hotkey program for Adafruit MACROPAD.
+"""A fairly straightforward macro/hotkey program for Adafruit MACROPAD.
+
 Macro key setups are stored in the /macros folder (configurable below),
 load up just the ones you're likely to use. Plug into computer's USB port,
 use dial to select an application macro set, press MACROPAD keys to send
@@ -19,30 +19,45 @@ from adafruit_macropad import MacroPad
 
 # CONFIGURABLES ------------------------
 
-MACRO_FOLDER = '/macros'
+MACRO_FOLDER = "/macros"
 
 
 # CLASSES AND FUNCTIONS ----------------
 
+
 class App:
-    """ Class representing a host-side application, for which we have a set
-        of macro sequences. Project code was originally more complex and
-        this was helpful, but maybe it's excessive now?"""
+    """Application Class to represent an application.
+
+    Class representing a host-side application, for which we have a set
+    of macro sequences. Project code was originally more complex and
+    this was helpful, but maybe it's excessive now?
+    """
+
     def __init__(self, appdata):
-        self.name = appdata['name']
-        self.macros = appdata['macros']
+        """Initialize the class.
+
+        Parameters
+        ----------
+        appdata : [dict]
+            name and macros for the application
+
+        """
+        self.name = appdata["name"]
+        self.macros = appdata["macros"]
 
     def switch(self):
-        """ Activate application settings; update OLED labels and LED
-            colors. """
-        group[13].text = self.name   # Application name
+        """Activate application settings.
+
+        Update OLED labels and LED colors.
+        """
+        group[13].text = self.name  # Application name
         for i in range(12):
-            if i < len(self.macros): # Key in use, set label + LED color
+            if i < len(self.macros):  # Key in use, set label + LED color
                 macropad.pixels[i] = self.macros[i][0]
                 group[i].text = self.macros[i][1]
             else:  # Key not in use, no label or LED
                 macropad.pixels[i] = 0
-                group[i].text = ''
+                group[i].text = ""
         macropad.keyboard.release_all()
         macropad.pixels.show()
         macropad.display.refresh()
@@ -59,15 +74,28 @@ group = displayio.Group()
 for key_index in range(12):
     x = key_index % 3
     y = key_index // 3
-    group.append(label.Label(terminalio.FONT, text='', color=0xFFFFFF,
-                             anchored_position=((macropad.display.width - 1) * x / 2,
-                                                macropad.display.height - 1 -
-                                                (3 - y) * 12),
-                             anchor_point=(x / 2, 1.0)))
+    group.append(
+        label.Label(
+            terminalio.FONT,
+            text="",
+            color=0xFFFFFF,
+            anchored_position=(
+                (macropad.display.width - 1) * x / 2,
+                macropad.display.height - 1 - (3 - y) * 12,
+            ),
+            anchor_point=(x / 2, 1.0),
+        )
+    )
 group.append(Rect(0, 0, macropad.display.width, 12, fill=0xFFFFFF))
-group.append(label.Label(terminalio.FONT, text='', color=0x000000,
-                         anchored_position=(macropad.display.width//2, -2),
-                         anchor_point=(0.5, 0.0)))
+group.append(
+    label.Label(
+        terminalio.FONT,
+        text="",
+        color=0x000000,
+        anchored_position=(macropad.display.width // 2, -2),
+        anchor_point=(0.5, 0.0),
+    )
+)
 macropad.display.show(group)
 
 # Load all the macro key setups from .py files in MACRO_FOLDER
@@ -75,16 +103,23 @@ apps = []
 files = os.listdir(MACRO_FOLDER)
 files.sort()
 for filename in files:
-    if filename.endswith('.py'):
+    if filename.endswith(".py"):
         try:
-            module = __import__(MACRO_FOLDER + '/' + filename[:-3])
+            module = __import__(MACRO_FOLDER + "/" + filename[:-3])
             apps.append(App(module.app))
-        except (SyntaxError, ImportError, AttributeError, KeyError, NameError,
-                IndexError, TypeError) as err:
+        except (
+            SyntaxError,
+            ImportError,
+            AttributeError,
+            KeyError,
+            NameError,
+            IndexError,
+            TypeError,
+        ) as err:
             pass
 
 if not apps:
-    group[13].text = 'NO MACRO FILES FOUND'
+    group[13].text = "NO MACRO FILES FOUND"
     macropad.display.refresh()
     while True:
         pass
@@ -113,13 +148,13 @@ while True:
     if encoder_switch != last_encoder_switch:
         last_encoder_switch = encoder_switch
         if len(apps[app_index].macros) < 13:
-            continue    # No 13th macro, just resume main loop
-        key_number = 12 # else process below as 13th macro
+            continue  # No 13th macro, just resume main loop
+        key_number = 12  # else process below as 13th macro
         pressed = encoder_switch
     else:
         event = macropad.keys.events.get()
         if not event or event.key_number >= len(apps[app_index].macros):
-            continue # No key events, or no corresponding macro, resume loop
+            continue  # No key events, or no corresponding macro, resume loop
         key_number = event.key_number
         pressed = event.pressed
 
@@ -138,7 +173,7 @@ while True:
         # Negative Integers ==> key released
         # Float             ==> sleep in seconds
         # String            ==> each key in string pressed & released
-        if key_number < 12: # No pixel for encoder button
+        if key_number < 12:  # No pixel for encoder button
             macropad.pixels[key_number] = 0xFFFFFF
             macropad.pixels.show()
         for item in sequence:
@@ -156,6 +191,6 @@ while True:
         for item in sequence:
             if isinstance(item, int) and item >= 0:
                 macropad.keyboard.release(item)
-        if key_number < 12: # No pixel for encoder button
+        if key_number < 12:  # No pixel for encoder button
             macropad.pixels[key_number] = apps[app_index].macros[key_number][0]
             macropad.pixels.show()
