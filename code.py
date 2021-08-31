@@ -1,5 +1,5 @@
-"""A fairly straightforward macro/hotkey program for Adafruit MACROPAD.
-
+"""
+A fairly straightforward macro/hotkey program for Adafruit MACROPAD.
 Macro key setups are stored in the /macros folder (configurable below),
 load up just the ones you're likely to use. Plug into computer's USB port,
 use dial to select an application macro set, press MACROPAD keys to send
@@ -15,6 +15,7 @@ import terminalio
 from adafruit_display_shapes.rect import Rect
 from adafruit_display_text import label
 from adafruit_macropad import MacroPad
+from macros.key_constants import *
 
 
 # CONFIGURABLES ------------------------
@@ -26,30 +27,17 @@ MACRO_FOLDER = "/macros"
 
 
 class App:
-    """Application Class to represent an application.
-
-    Class representing a host-side application, for which we have a set
+    """Class representing a host-side application, for which we have a set
     of macro sequences. Project code was originally more complex and
-    this was helpful, but maybe it's excessive now?
-    """
+    this was helpful, but maybe it's excessive now?"""
 
     def __init__(self, appdata):
-        """Initialize the class.
-
-        Parameters
-        ----------
-        appdata : [dict]
-            name and macros for the application
-
-        """
         self.name = appdata["name"]
         self.macros = appdata["macros"]
 
     def switch(self):
-        """Activate application settings.
-
-        Update OLED labels and LED colors.
-        """
+        """Activate application settings; update OLED labels and LED
+        colors."""
         group[13].text = self.name  # Application name
         for i in range(12):
             if i < len(self.macros):  # Key in use, set label + LED color
@@ -156,6 +144,10 @@ while True:
         if not event or event.key_number >= len(apps[app_index].macros):
             continue  # No key events, or no corresponding macro, resume loop
         key_number = event.key_number
+        if key_number >= 9:
+            if key_number == 10:
+                apps[0].switch()
+            continue
         pressed = event.pressed
 
     # If code reaches here, a key or the encoder button WAS pressed/released
@@ -184,6 +176,17 @@ while True:
                     macropad.keyboard.release(-item)
             elif isinstance(item, float):
                 time.sleep(item)
+            elif isinstance(item, list):
+                for _item in item:
+                    if isinstance(_item, int):
+                        if _item >= 0:
+                            macropad.keyboard.press(_item)
+                        else:
+                            macropad.keyboard.release(-_item)
+                    elif isinstance(_item, float):
+                        time.sleep(_item)
+                    else:
+                        macropad.keyboard_layout.write(_item)
             else:
                 macropad.keyboard_layout.write(item)
     else:
@@ -191,6 +194,10 @@ while True:
         for item in sequence:
             if isinstance(item, int) and item >= 0:
                 macropad.keyboard.release(item)
+            if isinstance(item, list):
+                for _item in item:
+                    if isinstance(_item, int) and _item >= 0:
+                        macropad.keyboard.release(_item)
         if key_number < 12:  # No pixel for encoder button
             macropad.pixels[key_number] = apps[app_index].macros[key_number][0]
             macropad.pixels.show()
