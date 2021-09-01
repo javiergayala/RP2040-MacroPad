@@ -8,17 +8,17 @@ app = {  # REQUIRED dict, must be named 'app'
     "macros": [  # List of button macros...
         # COLOR    LABEL    KEY SEQUENCE
         # 1st row ----------
-        (ZOOM_COLOR, "Mute", [ZOOM_KEY, [Keycode.SHIFT, Keycode.COMMAND, "A"]]),
-        (ZOOM_COLOR, "Mute ALL", [ZOOM_KEY, [Keycode.CONTROL, Keycode.COMMAND, "M"]]),
-        (ZOOM_COLOR, "Chat", [ZOOM_KEY, [Keycode.SHIFT, Keycode.COMMAND, "H"]]),
+        (ZOOM_COLOR, "Mute", [Keycode.SHIFT, Keycode.COMMAND, "A"]),
+        (ZOOM_COLOR, "Mute ALL", [Keycode.CONTROL, Keycode.COMMAND, "M"]),
+        (ZOOM_COLOR, "Chat", [Keycode.SHIFT, Keycode.COMMAND, "H"]),
         # 2nd row ----------
-        (ZOOM_COLOR, "Camera", [ZOOM_KEY, [Keycode.SHIFT, Keycode.COMMAND, "V"]]),
-        (ZOOM_COLOR, "Share", [ZOOM_KEY, [Keycode.SHIFT, Keycode.COMMAND, "S"]]),
+        (ZOOM_COLOR, "Camera", [Keycode.SHIFT, Keycode.COMMAND, "V"]),
+        (ZOOM_COLOR, "Share", [Keycode.SHIFT, Keycode.COMMAND, "S"]),
         (0x000000, "", []),
         # 3rd row ----------
-        (ZOOM_COLOR, "Join", [ZOOM_KEY, [Keycode.COMMAND, "J"]]),
-        (ZOOM_COLOR, "Start Mtg", [ZOOM_KEY, [Keycode.CONTROL, Keycode.COMMAND, "V"]]),
-        (ZOOM_COLOR, "Leave", [ZOOM_KEY, [Keycode.COMMAND, "W"]]),
+        (ZOOM_COLOR, "Join", [Keycode.COMMAND, "J"]),
+        (ZOOM_COLOR, "Start Mtg", [Keycode.CONTROL, Keycode.COMMAND, "V"]),
+        (ZOOM_COLOR, "Leave", [Keycode.COMMAND, "W"]),
         # 4th row ----------
         (0x000000, "<--", []),  # Adafruit in new window
         (ZOOM_COLOR, "Zoom", ZOOM_KEY),

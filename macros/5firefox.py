@@ -8,29 +8,21 @@ app = {  # REQUIRED dict, must be named 'app'
     "macros": [  # List of button macros...
         # COLOR    LABEL    KEY SEQUENCE
         # 1st row ----------
-        (FIREFOX_COLOR, "< Back", [FIREFOX_KEY, [Keycode.COMMAND, Keycode.LEFT_ARROW]]),
-        (FIREFOX_COLOR, "Fwd >", [FIREFOX_KEY, [Keycode.COMMAND, Keycode.RIGHT_ARROW]]),
-        (FIREFOX_COLOR, "Up", [FIREFOX_KEY, [Keycode.SHIFT, " "]]),  # Scroll ]up
+        (FIREFOX_COLOR, "< Back", [Keycode.COMMAND, Keycode.LEFT_ARROW]),
+        (FIREFOX_COLOR, "Fwd >", [Keycode.COMMAND, Keycode.RIGHT_ARROW]),
+        (FIREFOX_COLOR, "Up", [Keycode.SHIFT, " "]),  # Scroll ]up
         # 2nd row ----------
-        (
-            FIREFOX_COLOR,
-            "< Tab",
-            [FIREFOX_KEY, [Keycode.COMMAND, Keycode.OPTION, Keycode.LEFT_ARROW]],
-        ),
+        (FIREFOX_COLOR, "< Tab", [Keycode.COMMAND, Keycode.OPTION, Keycode.LEFT_ARROW]),
         (
             FIREFOX_COLOR,
             "Tab >",
-            [FIREFOX_KEY, [Keycode.COMMAND, Keycode.OPTION, Keycode.RIGHT_ARROW]],
+            [Keycode.COMMAND, Keycode.OPTION, Keycode.RIGHT_ARROW],
         ),
-        (FIREFOX_COLOR, "Down", [FIREFOX_KEY, [" "]]),  # Scroll down
+        (FIREFOX_COLOR, "Down", [" "]),  # Scroll down
         # 3rd row ----------
-        (FIREFOX_COLOR, "Reload", [FIREFOX_KEY, [Keycode.COMMAND, "r"]]),
-        (FIREFOX_COLOR, "Home", [FIREFOX_KEY, [Keycode.OPTION, "H"]]),
-        (
-            FIREFOX_COLOR,
-            "Private",
-            [FIREFOX_KEY, [Keycode.COMMAND, Keycode.SHIFT, "P"]],
-        ),
+        (FIREFOX_COLOR, "Reload", [Keycode.COMMAND, "r"]),
+        (FIREFOX_COLOR, "Home", [Keycode.OPTION, "H"]),
+        (FIREFOX_COLOR, "Private", [Keycode.COMMAND, Keycode.SHIFT, "P"]),
         # 4th row ----------
         (0x000000, "<--", []),  # Adafruit in new window
         (FIREFOX_COLOR, "Firefox", FIREFOX_KEY),
