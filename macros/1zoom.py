@@ -1,7 +1,7 @@
 # MACROPAD Hotkeys example: Safari web browser for Mac
 
 from adafruit_hid.keycode import Keycode  # REQUIRED if using Keycode.* values
-from key_constants import *
+from key_constants import ZOOM_COLOR, ZOOM_KEY
 
 app = {  # REQUIRED dict, must be named 'app'
     "name": "Zoom",  # Application name
@@ -21,7 +21,7 @@ app = {  # REQUIRED dict, must be named 'app'
         (ZOOM_COLOR, "Leave", [ZOOM_KEY, [Keycode.COMMAND, "W"]]),
         # 4th row ----------
         (0x000000, "<--", []),  # Adafruit in new window
-        (0x800000, "Home", []),  # Digi-Key in new window
+        (ZOOM_COLOR, "Zoom", ZOOM_KEY),
         (0x000000, "-->", []),  # Hack-a-Day in new win
         # Encoder button ---
         (0x000000, "", [Keycode.COMMAND, "w"]),  # Close window/tab

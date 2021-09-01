@@ -1,7 +1,14 @@
 # MACROPAD Hotkeys example: Safari web browser for Mac
 
 from adafruit_hid.keycode import Keycode  # REQUIRED if using Keycode.* values
-from key_constants import *
+from key_constants import (
+    ZOOM_KEY,
+    TEAMS_KEY,
+    IMSG_KEY,
+    ITERM_KEY,
+    FIREFOX_KEY,
+    SAFARI_KEY,
+)
 
 app = {  # REQUIRED dict, must be named 'app'
     "name": "DEFAULT",  # Application name

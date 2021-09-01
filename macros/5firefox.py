@@ -1,7 +1,7 @@
 # MACROPAD Hotkeys example: FIREFOX web browser for Mac
 
 from adafruit_hid.keycode import Keycode  # REQUIRED if using Keycode.* values
-from key_constants import *
+from key_constants import FIREFOX_COLOR, FIREFOX_KEY
 
 app = {  # REQUIRED dict, must be named 'app'
     "name": "Firefox",  # Application name
@@ -33,7 +33,7 @@ app = {  # REQUIRED dict, must be named 'app'
         ),
         # 4th row ----------
         (0x000000, "<--", []),  # Adafruit in new window
-        (0x800000, "Home", []),  # Digi-Key in new window
+        (FIREFOX_COLOR, "Firefox", FIREFOX_KEY),
         (0x000000, "-->", []),  # Hack-a-Day in new win
         # Encoder button ---
         (0x000000, "", [Keycode.COMMAND, "w"]),  # Close window/tab

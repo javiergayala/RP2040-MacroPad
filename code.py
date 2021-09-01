@@ -15,7 +15,8 @@ import terminalio
 from adafruit_display_shapes.rect import Rect
 from adafruit_display_text import label
 from adafruit_macropad import MacroPad
-from macros.key_constants import *
+
+# from macros.key_constants import *
 
 
 # CONFIGURABLES ------------------------
@@ -104,6 +105,7 @@ for filename in files:
             IndexError,
             TypeError,
         ) as err:
+            print("Error: %s" % err)
             pass
 
 if not apps:
@@ -137,17 +139,16 @@ while True:
         last_encoder_switch = encoder_switch
         if len(apps[app_index].macros) < 13:
             continue  # No 13th macro, just resume main loop
-        key_number = 12  # else process below as 13th macro
-        pressed = encoder_switch
+        # key_number = 12  # else process below as 13th macro
+        # pressed = encoder_switch
+        app_index = 0  # Change to "Default" screen
+        apps[app_index].switch()
+        continue
     else:
         event = macropad.keys.events.get()
         if not event or event.key_number >= len(apps[app_index].macros):
             continue  # No key events, or no corresponding macro, resume loop
         key_number = event.key_number
-        if key_number >= 9:
-            if key_number == 10:
-                apps[0].switch()
-            continue
         pressed = event.pressed
 
     # If code reaches here, a key or the encoder button WAS pressed/released
@@ -168,6 +169,16 @@ while True:
         if key_number < 12:  # No pixel for encoder button
             macropad.pixels[key_number] = 0xFFFFFF
             macropad.pixels.show()
+            if key_number == 9:
+                macropad.consumer_control.send(
+                    macropad.ConsumerControlCode.VOLUME_DECREMENT
+                )
+                continue
+            elif key_number == 11:
+                macropad.consumer_control.send(
+                    macropad.ConsumerControlCode.VOLUME_INCREMENT
+                )
+                continue
         for item in sequence:
             if isinstance(item, int):
                 if item >= 0:
