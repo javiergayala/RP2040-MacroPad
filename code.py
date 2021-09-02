@@ -118,12 +118,34 @@ if not apps:
 last_position = 0
 last_encoder_switch = macropad.encoder_switch_debounced.pressed
 position = 0
+rot_position = None
+rot_last_position = 0
 app_index = 0
 apps[app_index].switch()
 
 
-def change_screen(position=0, last_position=0, direction=0):
-    # position = last_position + direction
+def change_screen(position=0, last_position=0):
+    """Change the screen and key layout.
+
+    Parameters
+    ----------
+    position : int, optional
+        new position in the cycle of screens, by default 0
+    last_position : int, optional
+        previous position in the cycle of screens, by default 0
+
+    Returns
+    -------
+    int
+        new position
+
+    int
+        "new" previous position
+
+    int
+        index of the current screen
+
+    """
     if position != last_position:
         app_index = position % len(apps)
         apps[app_index].switch()
@@ -135,15 +157,18 @@ def change_screen(position=0, last_position=0, direction=0):
 
 while True:
     # Read encoder position. If it's changed, switch apps.
-    # position = macropad.encoder
-    # if position != last_position:
-    #     app_index = position % len(apps)
-    #     print(
-    #         "Position: %s | Last Position: %s| AppIndex: %s"
-    #         % (position, last_position, app_index)
-    #     )
-    #     apps[app_index].switch()
-    #     last_position = position
+    rot_position = macropad.encoder
+    if rot_position != rot_last_position:
+        if rot_position < rot_last_position:
+            macropad.consumer_control.send(
+                macropad.ConsumerControlCode.VOLUME_DECREMENT
+            )
+        elif rot_position > rot_last_position:
+            macropad.consumer_control.send(
+                macropad.ConsumerControlCode.VOLUME_INCREMENT
+            )
+        rot_last_position = rot_position
+        continue
 
     # Handle encoder button. If state has changed, and if there's a
     # corresponding macro, set up variables to act on this just like
@@ -195,16 +220,7 @@ while True:
         if key_number < 12:  # No pixel for encoder button
             macropad.pixels[key_number] = 0xFFFFFF
             macropad.pixels.show()
-            if key_number == 9:
-                macropad.consumer_control.send(
-                    macropad.ConsumerControlCode.VOLUME_DECREMENT
-                )
-                continue
-            elif key_number == 11:
-                macropad.consumer_control.send(
-                    macropad.ConsumerControlCode.VOLUME_INCREMENT
-                )
-                continue
+
         for item in sequence:
             if isinstance(item, int):
                 if item >= 0:
