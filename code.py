@@ -182,6 +182,8 @@ while True:
         # key_number = 12  # else process below as 13th macro
         # pressed = encoder_switch
         app_index = 0  # Change to "Default" screen
+        position = 0
+        last_position = 0
         apps[app_index].switch()
         continue
     else:
