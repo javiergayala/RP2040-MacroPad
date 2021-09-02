@@ -96,10 +96,11 @@ for filename in files:
         try:
             module = __import__(MACRO_FOLDER + "/" + filename[:-3])
             apps.append(App(module.app))
+        except AttributeError:
+            pass
         except (
             SyntaxError,
             ImportError,
-            AttributeError,
             KeyError,
             NameError,
             IndexError,
@@ -114,21 +115,35 @@ if not apps:
     while True:
         pass
 
-last_position = None
+last_position = 0
 last_encoder_switch = macropad.encoder_switch_debounced.pressed
+position = 0
 app_index = 0
 apps[app_index].switch()
+
+
+def change_screen(position=0, last_position=0, direction=0):
+    # position = last_position + direction
+    if position != last_position:
+        app_index = position % len(apps)
+        apps[app_index].switch()
+        last_position = position
+    return position, last_position, app_index
 
 
 # MAIN LOOP ----------------------------
 
 while True:
     # Read encoder position. If it's changed, switch apps.
-    position = macropad.encoder
-    if position != last_position:
-        app_index = position % len(apps)
-        apps[app_index].switch()
-        last_position = position
+    # position = macropad.encoder
+    # if position != last_position:
+    #     app_index = position % len(apps)
+    #     print(
+    #         "Position: %s | Last Position: %s| AppIndex: %s"
+    #         % (position, last_position, app_index)
+    #     )
+    #     apps[app_index].switch()
+    #     last_position = position
 
     # Handle encoder button. If state has changed, and if there's a
     # corresponding macro, set up variables to act on this just like
@@ -150,6 +165,17 @@ while True:
             continue  # No key events, or no corresponding macro, resume loop
         key_number = event.key_number
         pressed = event.pressed
+
+        if key_number == 9 and pressed:
+            position, last_position, app_index = change_screen(
+                position - 1, last_position
+            )
+            continue
+        elif key_number == 11 and pressed:
+            position, last_position, app_index = change_screen(
+                position + 1, last_position
+            )
+            continue
 
     # If code reaches here, a key or the encoder button WAS pressed/released
     # and there IS a corresponding macro available for it...other situations
