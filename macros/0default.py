@@ -23,7 +23,7 @@ app = {  # REQUIRED dict, must be named 'app'
         (0x000000, "Firefox", FIREFOX_KEY),
         (0x000000, "Safari", SAFARI_KEY),
         # 3rd row ----------
-        (0x000000, "Lock", [Keycode.CONTROL, Keycode.COMMAND, Keycode.Q]),
+        (0x000000, "Lock", [Keycode.CONTROL, Keycode.F17]),
         (0x000000, "Amph", [Keycode.CONTROL, Keycode.COMMAND, Keycode.F17]),
         (0x000000, "VSCode", [Keycode.COMMAND, Keycode.HOME]),
         # 4th row ----------
