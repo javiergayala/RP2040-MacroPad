@@ -1,0 +1,9 @@
+adafruit_debouncer==1.3.11
+adafruit_macropad==2.0.2
+adafruit_pixelbuf==1.1.0
+adafruit_simple_text_display==1.2.0
+neopixel==6.2.1
+adafruit_display_shapes==2.3.0
+adafruit_display_text==2.21.0
+adafruit_hid==5.1.1
+adafruit_midi==1.4.2
