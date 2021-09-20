@@ -28,7 +28,7 @@ app = {  # REQUIRED dict, must be named 'app'
         (0x000000, "VSCode", [Keycode.COMMAND, Keycode.HOME]),
         # 4th row ----------
         (0x000000, "<--", []),  # Adafruit in new window
-        (0x800000, "Home", []),  # Digi-Key in new window
+        (0x000000, "Home", []),  # Digi-Key in new window
         (0x000000, "-->", []),  # Hack-a-Day in new win
         # Encoder button ---
         (0x000000, "", [Keycode.COMMAND, "w"]),  # Close window/tab

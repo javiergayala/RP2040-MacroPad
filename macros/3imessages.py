@@ -17,7 +17,7 @@ app = {  # REQUIRED dict, must be named 'app'
         (0x000000, "", []),  # Scroll down
         # 3rd row ----------
         (IMSG_COLOR, "Previous", [Keycode.CONTROL, Keycode.SHIFT, Keycode.TAB]),
-        (0x000000, "", []),
+        (IMSG_COLOR, "\\n", [Keycode.SHIFT, Keycode.RETURN]),
         (IMSG_COLOR, "Next", [Keycode.CONTROL, Keycode.TAB]),
         # 4th row ----------
         (0x000000, "<--", []),  # Adafruit in new window
