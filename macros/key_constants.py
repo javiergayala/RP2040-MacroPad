@@ -6,7 +6,7 @@ from adafruit_hid.keycode import Keycode
 # Keys
 
 ZOOM_KEY = [Keycode.LEFT_CONTROL, Keycode.F13]
-TEAMS_KEY = [Keycode.F16]
+SLACK_KEY = [Keycode.F16]
 IMSG_KEY = [Keycode.F17]
 ITERM_KEY = [Keycode.F18]
 FIREFOX_KEY = [Keycode.F19]
@@ -16,7 +16,7 @@ VSCODE_KEY = [Keycode.COMMAND, Keycode.HOME]
 # Colors
 
 ZOOM_COLOR = const(0x2D8CFF)
-TEAMS_COLOR = const(0x6264A7)
+SLACK_COLOR = const(0x4A154B)
 IMSG_COLOR = const(0x34C759)
 ITERM_COLOR = const(0xA2A8A3)
 FIREFOX_COLOR = const(0xA44900)

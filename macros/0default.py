@@ -3,7 +3,7 @@
 from adafruit_hid.keycode import Keycode  # REQUIRED if using Keycode.* values
 from key_constants import (
     ZOOM_KEY,
-    TEAMS_KEY,
+    SLACK_KEY,
     IMSG_KEY,
     ITERM_KEY,
     FIREFOX_KEY,
@@ -16,7 +16,7 @@ app = {  # REQUIRED dict, must be named 'app'
         # COLOR    LABEL    KEY SEQUENCE
         # 1st row ----------
         (0x000000, "Zoom", ZOOM_KEY),
-        (0x000000, "Teams", TEAMS_KEY),
+        (0x000000, "Slack", SLACK_KEY),
         (0x000000, "iMsg", IMSG_KEY),
         # 2nd row ----------
         (0x000000, "iTerm", ITERM_KEY),
